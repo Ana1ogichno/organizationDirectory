@@ -1,0 +1,16 @@
+services:
+  postgres-organization-directory:
+    container_name: postgres-organization-directory
+    image: postgres:15
+    env_file: .env
+    volumes:
+      - /docker-volumes/organization-directory/postgres:/var/lib/postgresql/data
+    restart: always
+    ports:
+      - "5432:5432"
+    networks:
+      - organization_directory_network
+
+networks:
+  organization_directory_network:
+    name: organization_directory_network
