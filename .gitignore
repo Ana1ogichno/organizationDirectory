@@ -1,0 +1,6 @@
+*__pycache__
+.idea
+.env
+.venv
+.ruff_cache
+docker-compose.local.yaml
