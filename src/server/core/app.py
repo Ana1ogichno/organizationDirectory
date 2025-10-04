@@ -11,7 +11,8 @@ from starlette.middleware.sessions import SessionMiddleware
 from src.common.errors import BackendException
 from src.config.docs.deps import get_app_description, get_tags_metadata
 from src.config.settings.deps import get_settings
-from src.server.core.controllers import api_controller
+
+# from src.server.core.controllers import api_controller
 from src.server.middleware.deps import (
     get_exception_handler,
     get_exception_middleware,
@@ -77,7 +78,7 @@ def include_routers():
     """
     Includes all application routes with API versioning.
     """
-    app.include_router(api_controller, prefix=get_settings().project.API_V1_STR)
+    # app.include_router(api_controller, prefix=get_settings().project.API_V1_STR)
 
 
 # === Pagination Setup === #

@@ -1,8 +1,8 @@
 from typing import TYPE_CHECKING
-from uuid import uuid4, UUID
+from uuid import UUID, uuid4
 
-from sqlalchemy import String, Float
-from sqlalchemy.orm import mapped_column, Mapped, relationship
+from sqlalchemy import Float, String
+from sqlalchemy.orm import Mapped, mapped_column, relationship
 
 from src.client.storages.postgres.core import PostgresSchemas
 from src.client.storages.postgres.utils import table_args

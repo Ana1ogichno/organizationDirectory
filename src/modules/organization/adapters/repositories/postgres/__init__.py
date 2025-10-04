@@ -1,0 +1,4 @@
+from .organization import OrganizationPsqlRepo
+from .organization_activity import OrganizationActivityPsqlRepo
+from .organization_address import OrganizationAddressPsqlRepo
+from .phone_number import PhoneNumberPsqlRepo

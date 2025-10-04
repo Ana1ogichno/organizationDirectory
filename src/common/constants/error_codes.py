@@ -10,8 +10,17 @@ class CommonError(Enum):
     ACCESS_DENIED = (3, 403, "Access denied")
 
 
+class ActivityError(Enum):
+    EXCEED_MAX_DEPTH = (
+        100,
+        400,
+        "The maximum level of activity nesting has been exceeded (maximum 3 levels).",
+    )
+
+
 class ErrorCodesEnums:
     """Centralized container for all grouped domain-specific error enums."""
 
     def __init__(self):
         self.Common = CommonError
+        self.Activity = ActivityError

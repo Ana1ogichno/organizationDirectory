@@ -31,3 +31,42 @@ def get_base_logger(
     :return: Configured base logger.
     """
     return manager.get_base_logger()
+
+
+def get_building_logger(
+    manager: Annotated[ILoggerManager, Depends(get_logger_manager)],
+) -> logging.Logger:
+    """
+    Get logger specifically configured for building-related logs.
+
+    :param manager: LoggerManager instance.
+    :return: Logger configured for building module logs.
+    """
+
+    return manager.get_building_logger()
+
+
+def get_activity_logger(
+    manager: Annotated[ILoggerManager, Depends(get_logger_manager)],
+) -> logging.Logger:
+    """
+    Get logger specifically configured for activity-related logs.
+
+    :param manager: LoggerManager instance.
+    :return: Logger configured for activity module logs.
+    """
+
+    return manager.get_activity_logger()
+
+
+def get_organization_logger(
+    manager: Annotated[ILoggerManager, Depends(get_logger_manager)],
+) -> logging.Logger:
+    """
+    Get logger specifically configured for organization-related logs.
+
+    :param manager: LoggerManager instance.
+    :return: Logger configured for organization module logs.
+    """
+
+    return manager.get_organization_logger()
