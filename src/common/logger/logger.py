@@ -66,5 +66,37 @@ class LoggerManager(ILoggerManager):
         return logger
 
     def get_base_logger(self) -> logging.Logger:
-        """Get logger for base-level application logs."""
+        """
+        Get logger for base-level application logs.
+
+        :return: Logger configured for general application base logs.
+        """
+
         return self._get_logger(LoggerConfigEnum.BASE.value)
+
+    def get_building_logger(self) -> logging.Logger:
+        """
+        Get logger specifically configured for building-related logs.
+
+        :return: Logger configured for building module logs.
+        """
+
+        return self._get_logger(LoggerConfigEnum.BUILDING.value)
+
+    def get_activity_logger(self) -> logging.Logger:
+        """
+        Get logger specifically configured for activity-related logs.
+
+        :return: Logger configured for activity module logs.
+        """
+
+        return self._get_logger(LoggerConfigEnum.ACTIVITY.value)
+
+    def get_organization_logger(self) -> logging.Logger:
+        """
+        Get logger specifically configured for organization-related logs.
+
+        :return: Logger configured for organization module logs.
+        """
+
+        return self._get_logger(LoggerConfigEnum.ORGANIZATION.value)

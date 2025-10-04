@@ -13,15 +13,36 @@ class ILoggerManager(ABC):
 
     @abstractmethod
     def get_base_logger(self) -> logging.Logger:
-        """Returns the base application logger (general-purpose logging)."""
+        """
+        Get logger for base-level application logs.
+
+        :return: Logger configured for general application base logs.
+        """
         ...
 
     @abstractmethod
-    def get_user_logger(self) -> logging.Logger:
-        """Returns the user-specific logger for logging user-related activities."""
+    def get_building_logger(self) -> logging.Logger:
+        """
+        Get logger specifically configured for building-related logs.
+
+        :return: Logger configured for building module logs.
+        """
         ...
 
     @abstractmethod
-    def get_status_logger(self) -> logging.Logger:
-        """Returns the status-specific logger for logging status-related activities."""
+    def get_activity_logger(self) -> logging.Logger:
+        """
+        Get logger specifically configured for activity-related logs.
+
+        :return: Logger configured for activity module logs.
+        """
+        ...
+
+    @abstractmethod
+    def get_organization_logger(self) -> logging.Logger:
+        """
+        Get logger specifically configured for organization-related logs.
+
+        :return: Logger configured for organization module logs.
+        """
         ...

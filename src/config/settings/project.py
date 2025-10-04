@@ -1,4 +1,4 @@
-from pydantic import EmailStr, Field, field_validator
+from pydantic import Field, field_validator
 from pydantic_core.core_schema import ValidationInfo
 from pydantic_settings import BaseSettings, SettingsConfigDict
 

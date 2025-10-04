@@ -30,6 +30,9 @@ class LoggerNameEnum(StrEnum):
     """Defines predefined logger names."""
 
     BASE = "BASE"
+    BUILDING = "BUILDING"
+    ACTIVITY = "ACTIVITY"
+    ORGANIZATION = "ORGANIZATION"
 
 
 class LoggerConfigEnum(Enum):
@@ -37,6 +40,24 @@ class LoggerConfigEnum(Enum):
 
     BASE = LoggerConfig(
         LoggerNameEnum.BASE,
+        get_settings().project.LOG_LEVEL.upper(),
+        LoggerFormatEnum.BASE,
+    )
+
+    BUILDING = LoggerConfig(
+        LoggerNameEnum.BUILDING,
+        get_settings().project.LOG_LEVEL.upper(),
+        LoggerFormatEnum.BASE,
+    )
+
+    ACTIVITY = LoggerConfig(
+        LoggerNameEnum.ACTIVITY,
+        get_settings().project.LOG_LEVEL.upper(),
+        LoggerFormatEnum.BASE,
+    )
+
+    ORGANIZATION = LoggerConfig(
+        LoggerNameEnum.ORGANIZATION,
         get_settings().project.LOG_LEVEL.upper(),
         LoggerFormatEnum.BASE,
     )
