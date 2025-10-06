@@ -3,6 +3,7 @@ from uuid import UUID
 
 from src.common.constants import ErrorCodesEnums
 from src.common.decorators import LoggingFunctionInfo
+from src.modules.building.filters import BuildingCoordinatesFilter
 from src.modules.building.interfaces import IBuildingSrv, IBuildingUC
 from src.modules.building.schemas import BuildingWithOrganizations
 from src.modules.building.usecases.constants import BuildingUCConsts
@@ -48,5 +49,25 @@ class BuildingUC(IBuildingUC):
 
         return await self._building_service.get_by_sid(
             building_sid=building_sid,
+            custom_options=self._consts.Options.with_organizations(),
+        )
+
+    @LoggingFunctionInfo(
+        description="Retrieve filtered buildings including their organizations using "
+        "predefined options."
+    )
+    async def get_filtered_list(
+        self,
+        filters: BuildingCoordinatesFilter,
+    ) -> list[BuildingWithOrganizations | None]:
+        """
+        Gets a filtered list of buildings enriched with associated organizations.
+
+        :param filters: BuildingCoordinatesFilter instance for filtering buildings.
+        :return: List of validated BuildingWithOrganizations models.
+        """
+
+        return await self._building_service.get_filtered_all(
+            filters=filters,
             custom_options=self._consts.Options.with_organizations(),
         )

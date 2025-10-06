@@ -1,6 +1,7 @@
 from abc import ABC, abstractmethod
 from uuid import UUID
 
+from src.modules.building.filters import BuildingCoordinatesFilter
 from src.modules.building.schemas import BuildingWithOrganizations
 
 
@@ -16,5 +17,18 @@ class IBuildingUC(ABC):
 
         :param building_sid: UUID of the building.
         :return: BuildingWithOrganizations instance containing related organizations.
+        """
+        ...
+
+    @abstractmethod
+    async def get_filtered_list(
+        self,
+        filters: BuildingCoordinatesFilter,
+    ) -> list[BuildingWithOrganizations | None]:
+        """
+        Abstract method to retrieve a filtered list of buildings with organizations.
+
+        :param filters: BuildingCoordinatesFilter instance defining filtering criteria.
+        :return: List of BuildingWithOrganizations instances.
         """
         ...
