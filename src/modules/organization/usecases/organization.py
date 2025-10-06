@@ -61,9 +61,10 @@ class OrganizationUC(IOrganizationUC):
     @LoggingFunctionInfo(
         description="Search organizations by activity with recursive descendant lookup."
     )
-    async def search_by_activity(self, activity_name: str) -> list[OrganizationFull]:
+    async def search_by_descendant_activity(self, activity_name: str) -> list[OrganizationFull]:
         """
-        Searches organizations linked to the specified activity and its descendant activities.
+        Searches organizations linked to the specified activity and its descendant
+        activities.
 
         :param activity_name: The root activity name to search organizations by.
         :return: List of fully detailed OrganizationFull objects.
@@ -77,3 +78,24 @@ class OrganizationUC(IOrganizationUC):
             activity_sids=activity_sids,
             custom_options=self._consts.Options.full(),
         )
+
+    @LoggingFunctionInfo(
+        description="Search organizations by a specific activity name."
+    )
+    async def search_by_activity(self, activity_name: str) -> list[OrganizationFull]:
+        """
+        Searches organizations linked to the specified activity name.
+
+        :param activity_name: The activity name to search organizations by.
+        :return: List of OrganizationFull instances related to the specified activity.
+        """
+
+        activity = await self._activity_service.get_by_name(
+            activity_name=activity_name,
+        )
+
+        return await self._organization_service.get_by_activity_sids(
+            activity_sids=[activity.sid],
+            custom_options=self._consts.Options.full(),
+        )
+

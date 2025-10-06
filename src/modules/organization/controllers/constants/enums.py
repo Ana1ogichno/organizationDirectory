@@ -7,6 +7,7 @@ class CtrlPath(StrEnum):
     """Enum defining route paths for organization controller endpoints."""
 
     sid = "/{sid}"
+    activity_descendant = "/search/activity/descendant"
     activity = "/search/activity"
 
 

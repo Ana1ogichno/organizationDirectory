@@ -4,6 +4,7 @@ from uuid import UUID
 from src.common.constants import ErrorCodesEnums
 from src.common.decorators.logger import LoggingFunctionInfo
 from src.modules.activity.interfaces import IActivityPsqlRepo, IActivitySrv
+from src.modules.activity.schemas import Activity
 
 
 class ActivitySrv(IActivitySrv):
@@ -42,4 +43,21 @@ class ActivitySrv(IActivitySrv):
 
         return await self._activity_psql_repo.get_all_descendant_activity_sids(
             activity_name=activity_name
+        )
+
+    @LoggingFunctionInfo(
+        description="Retrieve activity by its name with model validation."
+    )
+    async def get_by_name(self, activity_name: str) -> Activity:
+        """
+        Retrieves an activity instance by name from the data repository and validates it.
+
+        :param activity_name: The name of the activity to retrieve.
+        :return: Validated Activity instance.
+        """
+
+        return Activity.model_validate(
+            await self._activity_psql_repo.get_by_name(
+                name=activity_name
+            )
         )
