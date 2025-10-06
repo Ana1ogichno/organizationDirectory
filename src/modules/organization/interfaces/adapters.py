@@ -59,12 +59,11 @@ class IOrganizationPsqlRepo(
         :param custom_options: Optional SQLAlchemy execution options.
         :return: Sequence of OrganizationModel instances or None.
         """
-        ...
 
     async def search_by_name(
-            self,
-            name: str,
-            custom_options: tuple[ExecutableOption, ...] | None = None,
+        self,
+        name: str,
+        custom_options: tuple[ExecutableOption, ...] | None = None,
     ) -> Sequence[OrganizationModel | None]:
         """
         Abstract method to search activities by a partial name match.
@@ -73,7 +72,6 @@ class IOrganizationPsqlRepo(
         :param custom_options: Optional SQLAlchemy options for the query.
         :return: Sequence of matching OrganizationModel or None.
         """
-        ...
 
 
 class IPhoneNumberPsqlRepo(

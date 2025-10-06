@@ -3,6 +3,7 @@ from uuid import UUID
 
 from fastapi import APIRouter
 
+from src.common.dependencies import APIKey
 from src.modules.building.filters import BuildingCoordinatesFilter
 from src.modules.building.interfaces import IBuildingUC
 from src.modules.organization.schemas import BuildingWithOrganizations
@@ -27,6 +28,7 @@ class IBuildingCtrl(ABC):
     @staticmethod
     @abstractmethod
     async def get_organizations_by_building_sid(
+        api_key: APIKey,
         building_sid: UUID,
         building_usecase: IBuildingUC,
     ) -> BuildingWithOrganizations:
@@ -34,6 +36,7 @@ class IBuildingCtrl(ABC):
         Abstract static method to retrieve organizations associated with a specific
         building SID.
 
+        :param api_key: API key
         :param building_sid: UUID of the building.
         :param building_usecase: Instance of IBuildingUC usecase interface.
         :return: BuildingWithOrganizations instance containing related organizations.
@@ -43,6 +46,7 @@ class IBuildingCtrl(ABC):
     @staticmethod
     @abstractmethod
     async def get_organizations_by_coordinates(
+        api_key: APIKey,
         coordinates: BuildingCoordinatesFilter,
         building_usecase: IBuildingUC,
     ) -> list[BuildingWithOrganizations | None]:
@@ -50,6 +54,7 @@ class IBuildingCtrl(ABC):
         Abstract static method to retrieve buildings and their organizations filtered
         by coordinates.
 
+        :param api_key: API key
         :param coordinates: BuildingCoordinatesFilter instance with coordinate filtering
                 parameters.
         :param building_usecase: Instance of IBuildingUC usecase for building

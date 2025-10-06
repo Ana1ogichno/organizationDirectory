@@ -1,4 +1,14 @@
 services:
+  backend-organization-directory:
+    container_name: backend-organization-directory
+    build: .
+    restart: always
+    env_file: .env
+    networks:
+      - organization_directory_network
+    ports:
+      - "8000:8000"
+
   postgres-organization-directory:
     container_name: postgres-organization-directory
     image: postgres:15

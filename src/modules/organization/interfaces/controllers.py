@@ -3,6 +3,7 @@ from uuid import UUID
 
 from fastapi import APIRouter
 
+from src.common.dependencies import APIKey
 from src.modules.organization.interfaces import IOrganizationUC
 from src.modules.organization.schemas import OrganizationFull
 
@@ -27,6 +28,7 @@ class IOrganizationCtrl(ABC):
     @staticmethod
     @abstractmethod
     async def get_by_sid(
+        api_key: APIKey,
         sid: UUID,
         organization_usecase: IOrganizationUC,
     ) -> OrganizationFull:
@@ -34,6 +36,7 @@ class IOrganizationCtrl(ABC):
         Abstract static method to retrieve full organization details by SID using the
         given use case.
 
+        :param api_key: API key.
         :param sid: UUID of the organization.
         :param organization_usecase: Instance of IOrganizationUC use case for
                 organization logic.
@@ -43,7 +46,8 @@ class IOrganizationCtrl(ABC):
 
     @staticmethod
     @abstractmethod
-    async def search_by_activity(
+    async def search_by_descendant_activity(
+        api_key: APIKey,
         organization_usecase: IOrganizationUC,
         activity_name: str,
     ) -> list[OrganizationFull]:
@@ -51,6 +55,25 @@ class IOrganizationCtrl(ABC):
         Abstract static method to search organizations by activity name using the
         provided organization use case.
 
+        :param api_key: API key.
+        :param organization_usecase: Instance of IOrganizationUC use case interface.
+        :param activity_name: Activity name string to search organizations by.
+        :return: List of OrganizationFull instances representing matching organizations.
+        """
+        ...
+
+    @staticmethod
+    @abstractmethod
+    async def search_by_activity(
+        api_key: APIKey,
+        organization_usecase: IOrganizationUC,
+        activity_name: str,
+    ) -> list[OrganizationFull]:
+        """
+        Abstract static method to search organizations by activity name using the
+        provided organization use case.
+
+        :param api_key: API key.
         :param organization_usecase: Instance of IOrganizationUC use case interface.
         :param activity_name: Activity name string to search organizations by.
         :return: List of OrganizationFull instances representing matching organizations.
@@ -60,6 +83,7 @@ class IOrganizationCtrl(ABC):
     @staticmethod
     @abstractmethod
     async def search_by_name(
+        api_key: APIKey,
         name: str,
         organization_usecase: IOrganizationUC,
     ) -> list[OrganizationFull]:
@@ -67,6 +91,7 @@ class IOrganizationCtrl(ABC):
         Abstract static method to search organizations by name using the given
         organization use case.
 
+        :param api_key: API key.
         :param name: Name or partial name of organizations to search for.
         :param organization_usecase: Instance of IOrganizationUC for business logic.
         :return: List of OrganizationFull instances matching the name search.

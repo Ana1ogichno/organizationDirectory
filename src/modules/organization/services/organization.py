@@ -83,10 +83,10 @@ class OrganizationSrv(IOrganizationSrv):
             OrganizationFull.model_validate(organization)
             for organization in organizations
         ]
-    
+
     @LoggingFunctionInfo(
         description="Search organizations by name and validate results with "
-                    "OrganizationFull models."
+        "OrganizationFull models."
     )
     async def search_by_name(
         self,

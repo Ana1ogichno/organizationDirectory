@@ -87,7 +87,7 @@ class OrganizationPsqlRepo(
         )
 
         return await self._get_all_results(query)
-    
+
     @LoggingFunctionInfo(
         description="Search activities by name using case-insensitive partial match."
     )

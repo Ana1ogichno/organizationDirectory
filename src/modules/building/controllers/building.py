@@ -4,6 +4,7 @@ from uuid import UUID
 from fastapi import APIRouter, Depends, Path
 from fastapi_filter import FilterDepends
 
+from src.common.dependencies import APIKey, get_api_key
 from src.modules.building.controllers.constants import BuildingCtrlEnums
 from src.modules.building.filters import BuildingCoordinatesFilter
 from src.modules.building.interfaces import IBuildingUC
@@ -57,6 +58,7 @@ class BuildingCtrl(IBuildingCtrl):
 
     @staticmethod
     async def get_organizations_by_building_sid(
+        api_key: Annotated[APIKey, Depends(get_api_key)],
         building_usecase: Annotated[IBuildingUC, Depends(get_building_usecase)],
         building_sid: UUID = Path(..., alias="buildingSid"),
     ) -> BuildingWithOrganizations:
@@ -79,6 +81,7 @@ class BuildingCtrl(IBuildingCtrl):
 
     @staticmethod
     async def get_organizations_by_coordinates(
+        api_key: Annotated[APIKey, Depends(get_api_key)],
         coordinates: Annotated[
             BuildingCoordinatesFilter, FilterDepends(BuildingCoordinatesFilter)
         ],

@@ -57,7 +57,5 @@ class ActivitySrv(IActivitySrv):
         """
 
         return Activity.model_validate(
-            await self._activity_psql_repo.get_by_name(
-                name=activity_name
-            )
+            await self._activity_psql_repo.get_by_name(name=activity_name)
         )

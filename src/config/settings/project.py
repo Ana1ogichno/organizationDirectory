@@ -12,6 +12,7 @@ class ProjectSettings(BaseSettings):
 
     # API
     API_V1_STR: str = "/api/v1"
+    SECRET_API_KEY: str = "123412341234"
 
     # Service Info
     PROJECT_VERSION: str = "0.0.1"  # Изменять вручную

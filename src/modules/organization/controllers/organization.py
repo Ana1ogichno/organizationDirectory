@@ -3,6 +3,7 @@ from uuid import UUID
 
 from fastapi import APIRouter, Depends, Query
 
+from src.common.dependencies import APIKey, get_api_key
 from src.modules.organization.controllers.constants import OrganizationCtrlEnums
 from src.modules.organization.interfaces import IOrganizationUC
 from src.modules.organization.interfaces.controllers import IOrganizationCtrl
@@ -69,6 +70,7 @@ class OrganizationCtrl(IOrganizationCtrl):
 
     @staticmethod
     async def get_by_sid(
+        api_key: Annotated[APIKey, Depends(get_api_key)],
         sid: UUID,
         organization_usecase: Annotated[
             IOrganizationUC, Depends(get_organization_usecase)
@@ -91,6 +93,7 @@ class OrganizationCtrl(IOrganizationCtrl):
 
     @staticmethod
     async def search_by_descendant_activity(
+        api_key: Annotated[APIKey, Depends(get_api_key)],
         organization_usecase: Annotated[
             IOrganizationUC, Depends(get_organization_usecase)
         ],
@@ -113,9 +116,10 @@ class OrganizationCtrl(IOrganizationCtrl):
         return await organization_usecase.search_by_descendant_activity(
             activity_name=activity_name
         )
-    
+
     @staticmethod
     async def search_by_activity(
+        api_key: Annotated[APIKey, Depends(get_api_key)],
         organization_usecase: Annotated[
             IOrganizationUC, Depends(get_organization_usecase)
         ],
@@ -141,6 +145,7 @@ class OrganizationCtrl(IOrganizationCtrl):
     @staticmethod
     async def search_by_name(
         name: str,
+        api_key: Annotated[APIKey, Depends(get_api_key)],
         organization_usecase: Annotated[
             IOrganizationUC, Depends(get_organization_usecase)
         ],
@@ -155,6 +160,4 @@ class OrganizationCtrl(IOrganizationCtrl):
         - List of OrganizationFull instances matching the search criteria.
         """
 
-        return await organization_usecase.search_by_name(
-            name=name
-        )
+        return await organization_usecase.search_by_name(name=name)

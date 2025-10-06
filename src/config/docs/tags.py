@@ -10,5 +10,6 @@ class OpenApiTagsMetadata(IOpenApiTagsMetadata):
     def get_tags_metadata() -> list[dict[str, str]]:
         return [
             {"name": "Building", "description": "Buildings module"},
+            {"name": "Organization", "description": "Organization module"},
             # ...extend here as needed
         ]

@@ -20,7 +20,9 @@ class IOrganizationUC(ABC):
         ...
 
     @abstractmethod
-    async def search_by_descendant_activity(self, activity_name: str) -> list[OrganizationFull]:
+    async def search_by_descendant_activity(
+        self, activity_name: str
+    ) -> list[OrganizationFull]:
         """
         Abstract method to search organizations by descendant activity name.
 

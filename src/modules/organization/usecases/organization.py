@@ -61,7 +61,9 @@ class OrganizationUC(IOrganizationUC):
     @LoggingFunctionInfo(
         description="Search organizations by activity with recursive descendant lookup."
     )
-    async def search_by_descendant_activity(self, activity_name: str) -> list[OrganizationFull]:
+    async def search_by_descendant_activity(
+        self, activity_name: str
+    ) -> list[OrganizationFull]:
         """
         Searches organizations linked to the specified activity and its descendant
         activities.

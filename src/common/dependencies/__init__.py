@@ -1,2 +1,1 @@
-from .oauth_scheme import oauth2_scheme
-from .user_sid import get_user_sid
+from .oauth_scheme import get_api_key, APIKey

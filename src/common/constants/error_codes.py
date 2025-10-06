@@ -8,6 +8,8 @@ class CommonError(Enum):
     NOT_UNIQUE = (1, 400, "Non-unique field(s) during creation")
     UNPROCESSABLE_ENTITY = (2, 422, "Unprocessable entity")
     ACCESS_DENIED = (3, 403, "Access denied")
+    API_KEY_NOT_FOUND = (4, 404, "API key not found")
+    INVALID_API_KEY = (5, 500, "Invalid API key")
 
 
 class ActivityError(Enum):
