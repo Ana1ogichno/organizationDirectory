@@ -6,7 +6,6 @@ from fastapi.logger import logger as fastapi_logger
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.routing import APIRoute
 from fastapi_pagination import add_pagination
-from starlette.middleware.sessions import SessionMiddleware
 
 from src.common.errors import BackendException
 from src.config.docs.deps import get_app_description, get_tags_metadata
@@ -60,10 +59,6 @@ def setup_middleware():
         allow_headers=["*"],
     )
 
-    app.add_middleware(
-        SessionMiddleware,
-        secret_key=get_settings().project.OAUTH_SECRET_KEY,
-    )
     app.middleware("http")(get_exception_middleware())
     app.middleware("http")(get_postgres_context_session_middleware())
 

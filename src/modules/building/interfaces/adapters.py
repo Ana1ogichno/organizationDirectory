@@ -1,8 +1,10 @@
 from abc import ABC, abstractmethod
+from collections.abc import Sequence
 
 from sqlalchemy.sql.base import ExecutableOption
 
 from src.common.interfaces import IPostgresBaseRepo
+from src.modules.building.filters import BuildingCoordinatesFilter
 from src.modules.building.models import BuildingModel
 from src.modules.building.schemas import BuildingCreate, BuildingUpdate
 
@@ -33,5 +35,20 @@ class IBuildingPsqlRepo(
         :param longitude: Longitude coordinate of the building.
         :param custom_options: Optional tuple of SQLAlchemy execution options.
         :return: BuildingModel instance matching the specified address and location.
+        """
+        ...
+
+    @abstractmethod
+    async def get_filtered_all(
+        self,
+        filters: BuildingCoordinatesFilter,
+        custom_options: tuple[ExecutableOption, ...] | None = None,
+    ) -> Sequence[BuildingModel]:
+        """
+        Abstract method to retrieve buildings filtered by specified coordinates.
+
+        :param filters: BuildingCoordinatesFilter instance containing filtering criteria.
+        :param custom_options: Optional tuple of SQLAlchemy ExecutableOptions for query customization.
+        :return: Sequence of BuildingModel instances matching the filters.
         """
         ...

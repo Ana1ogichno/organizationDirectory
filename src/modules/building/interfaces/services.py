@@ -3,6 +3,7 @@ from uuid import UUID
 
 from sqlalchemy.sql.base import ExecutableOption
 
+from src.modules.building.filters import BuildingCoordinatesFilter
 from src.modules.building.schemas import BuildingWithOrganizations
 
 
@@ -23,5 +24,22 @@ class IBuildingSrv(ABC):
         :param custom_options: Optional tuple of SQLAlchemy ExecutableOptions for
                 query customization.
         :return: BuildingWithOrganizations instance including associated organizations.
+        """
+        ...
+
+    @abstractmethod
+    async def get_filtered_all(
+        self,
+        filters: BuildingCoordinatesFilter,
+        custom_options: tuple[ExecutableOption, ...] = None,
+    ) -> list[BuildingWithOrganizations | None]:
+        """
+        Abstract method to retrieve buildings filtered by specified coordinates,
+        returning a list of BuildingWithOrganizations models.
+
+        :param filters: BuildingCoordinatesFilter instance with filtering criteria.
+        :param custom_options: Optional tuple of SQLAlchemy ExecutableOptions for query
+                customization.
+        :return: List of BuildingWithOrganizations instances or None.
         """
         ...

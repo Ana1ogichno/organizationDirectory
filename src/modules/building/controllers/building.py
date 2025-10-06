@@ -2,8 +2,10 @@ from typing import Annotated
 from uuid import UUID
 
 from fastapi import APIRouter, Depends, Path
+from fastapi_filter import FilterDepends
 
 from src.modules.building.controllers.constants import BuildingCtrlEnums
+from src.modules.building.filters import BuildingCoordinatesFilter
 from src.modules.building.interfaces import IBuildingUC
 from src.modules.building.interfaces.controllers import IBuildingCtrl
 from src.modules.building.schemas import BuildingWithOrganizations
@@ -46,6 +48,12 @@ class BuildingCtrl(IBuildingCtrl):
             methods=[self._enums.Common.RequestTypes.GET],
             response_model=BuildingWithOrganizations,
         )
+        self._controller.add_api_route(
+            path=self._enums.CtrlPath.by_coordinates,
+            endpoint=self.get_organizations_by_coordinates,
+            methods=[self._enums.Common.RequestTypes.GET],
+            response_model=list[BuildingWithOrganizations | None],
+        )
 
     @staticmethod
     async def get_organizations_by_building_sid(
@@ -67,4 +75,29 @@ class BuildingCtrl(IBuildingCtrl):
 
         return await building_usecase.get_organizations_by_sid(
             building_sid=building_sid
+        )
+
+    @staticmethod
+    async def get_organizations_by_coordinates(
+        coordinates: Annotated[
+            BuildingCoordinatesFilter, FilterDepends(BuildingCoordinatesFilter)
+        ],
+        building_usecase: Annotated[IBuildingUC, Depends(get_building_usecase)],
+    ) -> list[BuildingWithOrganizations | None]:
+        """
+        Retrieves a filtered list of buildings with their associated organizations
+        based on provided coordinate filters.
+
+        Parameters:
+
+            - coordinates (BuildingCoordinatesFilter):
+                Filter parameters to specify the geographic area of interest.
+
+        Returns:
+            list[BuildingWithOrganizations | None]:
+                List of buildings along with their organizations matching the filters.
+        """
+
+        return await building_usecase.get_filtered_list(
+            filters=coordinates,
         )

@@ -5,6 +5,7 @@ from sqlalchemy.sql.base import ExecutableOption
 
 from src.common.constants import ErrorCodesEnums
 from src.common.decorators.logger import LoggingFunctionInfo
+from src.modules.building.filters import BuildingCoordinatesFilter
 from src.modules.building.interfaces import IBuildingPsqlRepo, IBuildingSrv
 from src.modules.building.schemas import BuildingWithOrganizations
 from src.server.middleware.exception import BackendException
@@ -59,3 +60,33 @@ class BuildingSrv(IBuildingSrv):
 
         self._logger.debug("Building successfully retrieved with SID: %s", building_sid)
         return BuildingWithOrganizations.model_validate(building)
+
+    @LoggingFunctionInfo(
+        description="Retrieves buildings filtered by coordinates and returns them with "
+        "associated organizations."
+    )
+    async def get_filtered_all(
+        self,
+        filters: BuildingCoordinatesFilter,
+        custom_options: tuple[ExecutableOption, ...] = None,
+    ) -> list[BuildingWithOrganizations | None]:
+        """
+        Retrieves buildings filtered by coordinates and converts them to
+        BuildingWithOrganizations models. Logs the number of buildings found.
+
+        :param filters: BuildingCoordinatesFilter instance specifying filter criteria.
+        :param custom_options: Optional SQLAlchemy execution options.
+        :return: List of BuildingWithOrganizations instances or None.
+        """
+
+        buildings = await self._building_psql_repo.get_filtered_all(
+            filters=filters, custom_options=custom_options
+        )
+
+        self._logger.debug(
+            "Filtered and retrieved %d buildings with organizations", len(buildings)
+        )
+
+        return [
+            BuildingWithOrganizations.model_validate(building) for building in buildings
+        ]

@@ -7,6 +7,7 @@ class CtrlPath(StrEnum):
     """Enum defining route paths for building controller endpoints."""
 
     organizations_by_building = "/{buildingSid}/organizations"
+    by_coordinates = "/coordinates"
 
 
 class BuildingCtrlEnums:

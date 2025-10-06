@@ -1,4 +1,5 @@
 import logging
+from collections.abc import Sequence
 
 from sqlalchemy import and_, select
 from sqlalchemy.ext.asyncio import AsyncSession
@@ -7,6 +8,7 @@ from sqlalchemy.sql.base import ExecutableOption
 from src.common.adapters.repositories.postgres import PostgresBaseRepo
 from src.common.constants import ErrorCodesEnums
 from src.common.decorators import LoggingFunctionInfo
+from src.modules.building.filters import BuildingCoordinatesFilter
 from src.modules.building.interfaces import IBuildingPsqlRepo
 from src.modules.building.models import BuildingModel
 from src.modules.building.schemas import BuildingCreate, BuildingUpdate
@@ -80,3 +82,31 @@ class BuildingPsqlRepo(
         )
 
         return await self._get_single_result(query)
+
+    @LoggingFunctionInfo(
+        description="Retrieves buildings filtered by coordinates using provided "
+        "filters and query options."
+    )
+    async def get_filtered_all(
+        self,
+        filters: BuildingCoordinatesFilter,
+        custom_options: tuple[ExecutableOption, ...] | None = None,
+    ) -> Sequence[BuildingModel | None]:
+        """
+        Executes a query to retrieve distinct buildings filtered by coordinates.
+
+        :param filters: BuildingCoordinatesFilter containing the filtering logic to apply.
+        :param custom_options: Optional SQLAlchemy execution options.
+        :return: Sequence of BuildingModel records matching the filters.
+        """
+
+        query = select(self._model).distinct()
+
+        query = await self._apply_options(
+            query=query,
+            options=custom_options,
+        )
+
+        query = filters.filter(query)
+
+        return await self._get_all_results(query)
