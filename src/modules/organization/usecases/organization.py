@@ -1,0 +1,51 @@
+import logging
+from uuid import UUID
+
+from src.common.constants import ErrorCodesEnums
+from src.common.decorators import LoggingFunctionInfo
+from src.modules.organization.interfaces import IOrganizationSrv, IOrganizationUC
+from src.modules.organization.schemas import OrganizationFull
+from src.modules.organization.usecases.constants import OrganizationUCConsts
+
+
+class OrganizationUC(IOrganizationUC):
+    """
+    Organization usecase implementation handling organization-related business logic.
+    """
+
+    def __init__(
+        self,
+        consts: OrganizationUCConsts,
+        logger: logging.Logger,
+        errors: ErrorCodesEnums,
+        organization_service: IOrganizationSrv,
+    ):
+        """
+        Initialize the BuildingUC.
+
+        :param consts: OrganizationUCConsts instance containing constant values and options.
+        :param logger: Logger instance for logging usecase operations.
+        :param errors: ErrorCodesEnums instance for error handling.
+        :param organization_service: Service handling organization-related business logic.
+        """
+
+        self._consts = consts
+        self._logger = logger
+        self._errors = errors
+        self._organization_service = organization_service
+
+    @LoggingFunctionInfo(
+        description="Fetches full organization details by SID using custom options."
+    )
+    async def get_by_sid(self, sid: UUID) -> OrganizationFull:
+        """
+        Retrieves a detailed representation of the organization by SID.
+
+        :param sid: UUID of the organization.
+        :return: OrganizationFull instance enriched with full data.
+        """
+
+        return await self._organization_service.get_by_sid(
+            sid=sid,
+            custom_options=self._consts.Options.full(),
+        )

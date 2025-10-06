@@ -8,8 +8,8 @@ from src.modules.building.controllers.constants import BuildingCtrlEnums
 from src.modules.building.filters import BuildingCoordinatesFilter
 from src.modules.building.interfaces import IBuildingUC
 from src.modules.building.interfaces.controllers import IBuildingCtrl
-from src.modules.building.schemas import BuildingWithOrganizations
 from src.modules.building.usecases.deps import get_building_usecase
+from src.modules.organization.schemas import BuildingWithOrganizations
 
 
 class BuildingCtrl(IBuildingCtrl):

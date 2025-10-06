@@ -5,8 +5,8 @@ from src.common.constants import ErrorCodesEnums
 from src.common.decorators import LoggingFunctionInfo
 from src.modules.building.filters import BuildingCoordinatesFilter
 from src.modules.building.interfaces import IBuildingSrv, IBuildingUC
-from src.modules.building.schemas import BuildingWithOrganizations
 from src.modules.building.usecases.constants import BuildingUCConsts
+from src.modules.organization.schemas import BuildingWithOrganizations
 
 
 class BuildingUC(IBuildingUC):

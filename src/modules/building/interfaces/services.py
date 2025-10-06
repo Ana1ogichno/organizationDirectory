@@ -4,7 +4,7 @@ from uuid import UUID
 from sqlalchemy.sql.base import ExecutableOption
 
 from src.modules.building.filters import BuildingCoordinatesFilter
-from src.modules.building.schemas import BuildingWithOrganizations
+from src.modules.organization.schemas import BuildingWithOrganizations
 
 
 class IBuildingSrv(ABC):

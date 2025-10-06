@@ -5,7 +5,7 @@ from fastapi import APIRouter
 
 from src.modules.building.filters import BuildingCoordinatesFilter
 from src.modules.building.interfaces import IBuildingUC
-from src.modules.building.schemas import BuildingWithOrganizations
+from src.modules.organization.schemas import BuildingWithOrganizations
 
 
 class IBuildingCtrl(ABC):
@@ -19,7 +19,7 @@ class IBuildingCtrl(ABC):
         """
         Get the API router instance that exposes building-related endpoints.
 
-        :return: APIRouter instance with user routes
+        :return: APIRouter instance with building routes
         """
 
         ...

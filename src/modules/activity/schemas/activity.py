@@ -20,3 +20,7 @@ class ActivityInit(ActivityCreate):
 @partial_schema
 class ActivityUpdate(ActivityBase):
     pass
+
+
+class Activity(ActivityBase):
+    sid: UUID

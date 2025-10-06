@@ -4,3 +4,5 @@ from .adapters import (
     IOrganizationPsqlRepo,
     IPhoneNumberPsqlRepo,
 )
+from .services import IOrganizationSrv
+from .usecases import IOrganizationUC

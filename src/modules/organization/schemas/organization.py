@@ -2,6 +2,8 @@ from uuid import UUID
 
 from src.common.decorators import partial_schema
 from src.common.schemas import CoreSchema
+from src.modules.activity.schemas import Activity
+from src.modules.building.schemas import Building
 
 
 class OrganizationBase(CoreSchema):
@@ -63,6 +65,14 @@ class AddressWithOrganization(OrganizationAddressBase):
     organization: Organization
 
 
+class BuildingWithOrganizations(Building):
+    addresses: list[AddressWithOrganization]
+
+
+class AddressWithBuilding(OrganizationAddressBase):
+    building: Building
+
+
 class OrganizationActivityBase(CoreSchema):
     organization_sid: UUID
     activity_sid: UUID
@@ -75,3 +85,8 @@ class OrganizationActivityCreate(OrganizationActivityBase):
 @partial_schema
 class OrganizationActivityUpdate(OrganizationActivityBase):
     pass
+
+
+class OrganizationFull(Organization):
+    address: AddressWithBuilding
+    activities: list[Activity]

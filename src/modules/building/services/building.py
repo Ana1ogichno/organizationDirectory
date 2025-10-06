@@ -7,7 +7,7 @@ from src.common.constants import ErrorCodesEnums
 from src.common.decorators.logger import LoggingFunctionInfo
 from src.modules.building.filters import BuildingCoordinatesFilter
 from src.modules.building.interfaces import IBuildingPsqlRepo, IBuildingSrv
-from src.modules.building.schemas import BuildingWithOrganizations
+from src.modules.organization.schemas import BuildingWithOrganizations
 from src.server.middleware.exception import BackendException
 
 
