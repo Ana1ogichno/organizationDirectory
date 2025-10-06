@@ -40,3 +40,13 @@ class IOrganizationUC(ABC):
         :return: List of OrganizationFull instances matching the activity.
         """
         ...
+
+    @abstractmethod
+    async def search_by_name(self, name: str) -> list[OrganizationFull]:
+        """
+        Abstract method to search organizations by name with full option.
+
+        :param name: Name or partial name of organizations to search for.
+        :return: List of OrganizationFull instances matching the name.
+        """
+        ...

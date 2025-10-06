@@ -83,3 +83,30 @@ class OrganizationSrv(IOrganizationSrv):
             OrganizationFull.model_validate(organization)
             for organization in organizations
         ]
+    
+    @LoggingFunctionInfo(
+        description="Search organizations by name and validate results with "
+                    "OrganizationFull models."
+    )
+    async def search_by_name(
+        self,
+        name: str,
+        custom_options: tuple[ExecutableOption, ...] = None,
+    ) -> list[OrganizationFull]:
+        """
+        Performs a search for organizations by name in the repository and validates the
+        results.
+
+        :param name: Name filter for searching organizations.
+        :param custom_options: Optional execution options for the query.
+        :return: List of validated OrganizationFull instances.
+        """
+
+        organizations = await self._organization_psql_repo.search_by_name(
+            name=name, custom_options=custom_options
+        )
+
+        return [
+            OrganizationFull.model_validate(organization)
+            for organization in organizations
+        ]

@@ -99,3 +99,19 @@ class OrganizationUC(IOrganizationUC):
             custom_options=self._consts.Options.full(),
         )
 
+    @LoggingFunctionInfo(
+        description="Retrieve organizations by name using full loading options."
+    )
+    async def search_by_name(self, name: str) -> list[OrganizationFull]:
+        """
+        Delegates the search by name to the organization service with default
+        full-loading options.
+
+        :param name: Name to search organizations by.
+        :return: List of OrganizationFull models matching the name.
+        """
+
+        return await self._organization_service.search_by_name(
+            name=name,
+            custom_options=self._consts.Options.full(),
+        )
