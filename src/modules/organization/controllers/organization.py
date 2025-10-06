@@ -49,6 +49,12 @@ class OrganizationCtrl(IOrganizationCtrl):
             response_model=OrganizationFull,
         )
         self._controller.add_api_route(
+            path=self._enums.CtrlPath.activity_descendant,
+            endpoint=self.search_by_descendant_activity,
+            methods=[self._enums.Common.RequestTypes.GET],
+            response_model=list[OrganizationFull],
+        )
+        self._controller.add_api_route(
             path=self._enums.CtrlPath.activity,
             endpoint=self.search_by_activity,
             methods=[self._enums.Common.RequestTypes.GET],
@@ -78,6 +84,31 @@ class OrganizationCtrl(IOrganizationCtrl):
         return await organization_usecase.get_by_sid(sid=sid)
 
     @staticmethod
+    async def search_by_descendant_activity(
+        organization_usecase: Annotated[
+            IOrganizationUC, Depends(get_organization_usecase)
+        ],
+        activity_name: str = Query(..., alias="activityName"),
+    ) -> list[OrganizationFull]:
+        """
+        Controller to search organizations by activity and its descendant activities
+        using a provided name.
+
+        Parameters:
+
+            - activityName (str):
+                Name of the activity to search by.
+
+        Returns:
+            List[OrganizationFull]:
+                List of organizations matching the activity represented by the SID.
+        """
+
+        return await organization_usecase.search_by_descendant_activity(
+            activity_name=activity_name
+        )
+    
+    @staticmethod
     async def search_by_activity(
         organization_usecase: Annotated[
             IOrganizationUC, Depends(get_organization_usecase)
@@ -85,7 +116,7 @@ class OrganizationCtrl(IOrganizationCtrl):
         activity_name: str = Query(..., alias="activityName"),
     ) -> list[OrganizationFull]:
         """
-        Controller to search organizations by activity using a provided SID.
+        Controller to search organizations by activity using a provided name.
 
         Parameters:
 
@@ -100,3 +131,4 @@ class OrganizationCtrl(IOrganizationCtrl):
         return await organization_usecase.search_by_activity(
             activity_name=activity_name
         )
+

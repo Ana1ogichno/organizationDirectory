@@ -20,11 +20,23 @@ class IOrganizationUC(ABC):
         ...
 
     @abstractmethod
+    async def search_by_descendant_activity(self, activity_name: str) -> list[OrganizationFull]:
+        """
+        Abstract method to search organizations by descendant activity name.
+
+        :param activity_name: Name of the activity to search organizations by,
+                including descendants.
+        :return: List of OrganizationFull instances matching the activity and its
+                descendants.
+        """
+        ...
+
+    @abstractmethod
     async def search_by_activity(self, activity_name: str) -> list[OrganizationFull]:
         """
         Abstract method to search organizations by activity name.
 
-        :param activity_name: Name of the activity to search by.
+        :param activity_name: Name of the activity to search organizations by.
         :return: List of OrganizationFull instances matching the activity.
         """
         ...
