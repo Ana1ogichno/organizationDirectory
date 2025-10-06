@@ -87,6 +87,11 @@ class OrganizationActivityUpdate(OrganizationActivityBase):
     pass
 
 
+class OrganizationWithActivity(OrganizationActivityBase):
+    activity: Activity
+
+
 class OrganizationFull(Organization):
     address: AddressWithBuilding
     activities: list[Activity]
+    phone_numbers: list[PhoneNumberBase]

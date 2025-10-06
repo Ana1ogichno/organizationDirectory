@@ -40,3 +40,19 @@ class IOrganizationCtrl(ABC):
         :return: OrganizationFull instance containing detailed organization data.
         """
         ...
+
+    @staticmethod
+    @abstractmethod
+    async def search_by_activity(
+        organization_usecase: IOrganizationUC,
+        activity_name: str,
+    ) -> list[OrganizationFull]:
+        """
+        Abstract static method to search organizations by activity name using the
+        provided organization use case.
+
+        :param organization_usecase: Instance of IOrganizationUC use case interface.
+        :param activity_name: Activity name string to search organizations by.
+        :return: List of OrganizationFull instances representing matching organizations.
+        """
+        ...

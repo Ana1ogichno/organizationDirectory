@@ -24,3 +24,18 @@ class IOrganizationSrv(ABC):
         :return: OrganizationFull instance representing full organization details.
         """
         ...
+
+    @abstractmethod
+    async def get_by_activity_sids(
+        self,
+        activity_sids: list[UUID],
+        custom_options: tuple[ExecutableOption, ...] = None,
+    ) -> list[OrganizationFull]:
+        """
+        Abstract method to retrieve full organization details by activity SIDs.
+
+        :param activity_sids: List of UUIDs for activity filtering.
+        :param custom_options: Optional SQLAlchemy execution options.
+        :return: List of OrganizationFull instances.
+        """
+        ...

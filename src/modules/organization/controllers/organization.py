@@ -1,7 +1,7 @@
 from typing import Annotated
 from uuid import UUID
 
-from fastapi import APIRouter, Depends
+from fastapi import APIRouter, Depends, Query
 
 from src.modules.organization.controllers.constants import OrganizationCtrlEnums
 from src.modules.organization.interfaces import IOrganizationUC
@@ -48,6 +48,12 @@ class OrganizationCtrl(IOrganizationCtrl):
             methods=[self._enums.Common.RequestTypes.GET],
             response_model=OrganizationFull,
         )
+        self._controller.add_api_route(
+            path=self._enums.CtrlPath.activity,
+            endpoint=self.search_by_activity,
+            methods=[self._enums.Common.RequestTypes.GET],
+            response_model=list[OrganizationFull],
+        )
 
     @staticmethod
     async def get_by_sid(
@@ -70,3 +76,27 @@ class OrganizationCtrl(IOrganizationCtrl):
         """
 
         return await organization_usecase.get_by_sid(sid=sid)
+
+    @staticmethod
+    async def search_by_activity(
+        organization_usecase: Annotated[
+            IOrganizationUC, Depends(get_organization_usecase)
+        ],
+        activity_name: str = Query(..., alias="activityName"),
+    ) -> list[OrganizationFull]:
+        """
+        Controller to search organizations by activity using a provided SID.
+
+        Parameters:
+
+            - activityName (str):
+                Name of the activity to search by.
+
+        Returns:
+            List[OrganizationFull]:
+                List of organizations matching the activity represented by the SID.
+        """
+
+        return await organization_usecase.search_by_activity(
+            activity_name=activity_name
+        )

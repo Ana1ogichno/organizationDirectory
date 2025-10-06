@@ -58,3 +58,28 @@ class OrganizationSrv(IOrganizationSrv):
         self._logger.debug("Organization successfully retrieved with SID: %s", sid)
 
         return OrganizationFull.model_validate(organization)
+
+    @LoggingFunctionInfo(
+        description="Retrieve full organizations by activity SIDs and validate models."
+    )
+    async def get_by_activity_sids(
+        self,
+        activity_sids: list[UUID],
+        custom_options: tuple[ExecutableOption, ...] = None,
+    ) -> list[OrganizationFull]:
+        """
+        Fetch organizations linked to the given activity SIDs and validate as OrganizationFull models.
+
+        :param activity_sids: List of activity UUIDs for filtering.
+        :param custom_options: Optional query execution options.
+        :return: List of OrganizationFull validated instances.
+        """
+
+        organizations = await self._organization_psql_repo.get_by_activity_sids(
+            activity_sids=activity_sids, custom_options=custom_options
+        )
+
+        return [
+            OrganizationFull.model_validate(organization)
+            for organization in organizations
+        ]

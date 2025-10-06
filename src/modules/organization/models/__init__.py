@@ -1,1 +1,5 @@
-from .organization import OrganizationAddressModel, OrganizationModel
+from .organization import (
+    OrganizationActivityModel,
+    OrganizationAddressModel,
+    OrganizationModel,
+)

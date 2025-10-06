@@ -16,6 +16,7 @@ class CustomOptions:
                 OrganizationAddressModel.building
             ),
             selectinload(OrganizationModel.activities),
+            selectinload(OrganizationModel.phone_numbers),
         ]
 
 
