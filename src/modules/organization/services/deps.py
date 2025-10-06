@@ -9,7 +9,10 @@ from src.common.logger.deps import get_organization_logger
 from src.modules.organization.adapters.repositories.postgres.deps import (
     get_organization_psql_repo,
 )
-from src.modules.organization.interfaces import IOrganizationPsqlRepo, IOrganizationSrv
+from src.modules.organization.interfaces import (
+    IOrganizationPsqlRepo,
+    IOrganizationSrv,
+)
 from src.modules.organization.services import OrganizationSrv
 
 

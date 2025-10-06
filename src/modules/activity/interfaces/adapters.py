@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from uuid import UUID
 
 from sqlalchemy.sql.base import ExecutableOption
 
@@ -27,5 +28,17 @@ class IActivityPsqlRepo(
         :param name: Name of the activity to search for.
         :param custom_options: Optional SQLAlchemy execution options.
         :return: An instance of ActivityModel matching the given name.
+        """
+        ...
+
+    @abstractmethod
+    async def get_all_descendant_activity_sids(self, activity_name: str) -> list[UUID]:
+        """
+        Abstract method to retrieve all descendant activity SIDs based on the activity
+        name.
+
+        :param activity_name: Name of the root activity.
+        :return: List of UUIDs representing all descendant activities including the
+                root.
         """
         ...

@@ -3,6 +3,7 @@ from uuid import UUID
 
 from sqlalchemy import select
 from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy.orm import aliased
 from sqlalchemy.sql.base import ExecutableOption
 
 from src.common.adapters.repositories.postgres import PostgresBaseRepo
@@ -109,3 +110,32 @@ class ActivityPsqlRepo(
         self._logger.info("Creating new activity with data: %s", obj_in)
 
         return await super().create(obj_in=obj_in, with_commit=with_commit)
+
+    @LoggingFunctionInfo(
+        description="Retrieve all descendant activity SIDs for a given activity name "
+        "using recursive CTE."
+    )
+    async def get_all_descendant_activity_sids(self, activity_name: str) -> list[UUID]:
+        """
+        Retrieves all SIDs of descendant activities of the specified activity using a
+        recursive CTE query.
+
+        :param activity_name: The root activity name to retrieve descendants for.
+        :return: List of UUIDs representing the root and all its descendant activities.
+        """
+
+        cte = (
+            select(self._model.sid, self._model.parent_sid)
+            .where(self._model.name == activity_name)
+            .cte(recursive=True)
+        )
+
+        activity_alias = aliased(self._model)
+        recursive = select(activity_alias.sid, activity_alias.parent_sid).join(
+            cte, activity_alias.parent_sid == cte.c.sid
+        )
+
+        cte = cte.union_all(recursive)
+
+        result = await self._db.execute(select(cte.c.sid))
+        return [row[0] for row in result.all()]

@@ -2,11 +2,11 @@ from typing import Annotated
 
 from fastapi import Depends
 
+from src.modules.organization.controllers import OrganizationCtrl
 from src.modules.organization.controllers.constants import OrganizationCtrlEnums
 from src.modules.organization.controllers.constants.deps import (
     get_organization_ctrl_enums,
 )
-from src.modules.organization.controllers import OrganizationCtrl
 from src.modules.organization.interfaces.controllers import IOrganizationCtrl
 
 

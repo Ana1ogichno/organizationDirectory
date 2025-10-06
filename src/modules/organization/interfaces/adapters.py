@@ -1,4 +1,5 @@
 from abc import ABC, abstractmethod
+from collections.abc import Sequence
 from uuid import UUID
 
 from sqlalchemy.sql.base import ExecutableOption
@@ -44,6 +45,20 @@ class IOrganizationPsqlRepo(
         :return: OrganizationModel instance matching the name or None.
         """
         ...
+
+    async def get_by_activity_sids(
+        self,
+        activity_sids: list[UUID],
+        custom_options: tuple[ExecutableOption, ...] | None = None,
+    ) -> Sequence[OrganizationModel | None]:
+        """
+        Abstract method to retrieve organizations associated with provided activity
+        SIDs.
+
+        :param activity_sids: List of UUIDs for the activities.
+        :param custom_options: Optional SQLAlchemy execution options.
+        :return: Sequence of OrganizationModel instances or None.
+        """
 
 
 class IPhoneNumberPsqlRepo(
