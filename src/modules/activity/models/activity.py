@@ -25,7 +25,7 @@ class ActivityModel(CoreModel):
         "ActivityModel", remote_side=[sid], backref="children"
     )
 
-    organizations: Mapped["OrganizationModel"] = relationship(
+    organizations: Mapped[list["OrganizationModel"]] = relationship(
         "OrganizationModel",
         secondary=f"{PostgresSchemas.ORGANIZATION}.organization_activity",
         back_populates="activities",

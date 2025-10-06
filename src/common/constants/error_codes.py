@@ -18,9 +18,14 @@ class ActivityError(Enum):
     )
 
 
+class BuildingError(Enum):
+    BUILDING_NOT_FOUND = (200, 404, "Building not found")
+
+
 class ErrorCodesEnums:
     """Centralized container for all grouped domain-specific error enums."""
 
     def __init__(self):
         self.Common = CommonError
         self.Activity = ActivityError
+        self.Building = BuildingError

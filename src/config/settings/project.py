@@ -15,7 +15,7 @@ class ProjectSettings(BaseSettings):
 
     # Service Info
     PROJECT_VERSION: str = "0.0.1"  # Изменять вручную
-    PROJECT_NAME: str = "StripesID Iam Service"
+    PROJECT_NAME: str = "Organization Directory"
 
     HOST: str = Field("localhost")
     PORT: int = Field(8000)
@@ -36,8 +36,6 @@ class ProjectSettings(BaseSettings):
     @field_validator("IS_PROD_MODE", mode="before")
     def assemble_prod_mode(cls, _: bool, values: ValidationInfo) -> bool:  # noqa: N805
         return values.data.get("MODE") == "prod"
-
-    OAUTH_SECRET_KEY: str = Field("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")
 
     TZ: str = Field("Europe/Moscow")
 

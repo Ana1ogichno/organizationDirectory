@@ -17,6 +17,10 @@ class OrganizationUpdate(OrganizationBase):
     pass
 
 
+class Organization(OrganizationBase):
+    sid: UUID
+
+
 class OrganizationInit(OrganizationCreate):
     phones: list[str]
     address: str
@@ -53,6 +57,10 @@ class OrganizationAddressCreate(OrganizationAddressBase):
 @partial_schema
 class OrganizationAddressUpdate(OrganizationAddressBase):
     pass
+
+
+class AddressWithOrganization(OrganizationAddressBase):
+    organization: Organization
 
 
 class OrganizationActivityBase(CoreSchema):
