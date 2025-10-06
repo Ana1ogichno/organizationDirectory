@@ -7,9 +7,9 @@ from sqlalchemy.orm import Mapped, mapped_column, relationship
 from src.client.storages.postgres.core import PostgresSchemas
 from src.client.storages.postgres.utils import table_args
 from src.common.models import CoreModel
+from src.modules.activity.models import ActivityModel  # noqa: TC001
 
 if TYPE_CHECKING:
-    from src.modules.activity.models import ActivityModel
     from src.modules.building.models import BuildingModel
 
 
@@ -25,7 +25,7 @@ class OrganizationModel(CoreModel):
     address: Mapped["OrganizationAddressModel"] = relationship(
         "OrganizationAddressModel", back_populates="organization"
     )
-    activities: Mapped["ActivityModel"] = relationship(
+    activities: Mapped[list["ActivityModel"]] = relationship(
         "ActivityModel",
         secondary=f"{PostgresSchemas.ORGANIZATION}.organization_activity",
         back_populates="organizations",
