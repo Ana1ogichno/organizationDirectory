@@ -56,3 +56,19 @@ class IOrganizationCtrl(ABC):
         :return: List of OrganizationFull instances representing matching organizations.
         """
         ...
+
+    @staticmethod
+    @abstractmethod
+    async def search_by_name(
+        name: str,
+        organization_usecase: IOrganizationUC,
+    ) -> list[OrganizationFull]:
+        """
+        Abstract static method to search organizations by name using the given
+        organization use case.
+
+        :param name: Name or partial name of organizations to search for.
+        :param organization_usecase: Instance of IOrganizationUC for business logic.
+        :return: List of OrganizationFull instances matching the name search.
+        """
+        ...

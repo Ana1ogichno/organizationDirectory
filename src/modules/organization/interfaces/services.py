@@ -39,3 +39,18 @@ class IOrganizationSrv(ABC):
         :return: List of OrganizationFull instances.
         """
         ...
+
+    @abstractmethod
+    async def search_by_name(
+        self,
+        name: str,
+        custom_options: tuple[ExecutableOption, ...] = None,
+    ) -> list[OrganizationFull]:
+        """
+        Abstract method to search organizations by name.
+
+        :param name: Name or partial name to search organizations by.
+        :param custom_options: Optional SQLAlchemy execution options.
+        :return: List of OrganizationFull instances matching the name.
+        """
+        ...

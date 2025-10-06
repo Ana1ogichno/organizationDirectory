@@ -60,6 +60,12 @@ class OrganizationCtrl(IOrganizationCtrl):
             methods=[self._enums.Common.RequestTypes.GET],
             response_model=list[OrganizationFull],
         )
+        self._controller.add_api_route(
+            path=self._enums.CtrlPath.by_name,
+            endpoint=self.search_by_name,
+            methods=[self._enums.Common.RequestTypes.GET],
+            response_model=list[OrganizationFull],
+        )
 
     @staticmethod
     async def get_by_sid(
@@ -132,3 +138,23 @@ class OrganizationCtrl(IOrganizationCtrl):
             activity_name=activity_name
         )
 
+    @staticmethod
+    async def search_by_name(
+        name: str,
+        organization_usecase: Annotated[
+            IOrganizationUC, Depends(get_organization_usecase)
+        ],
+    ) -> list[OrganizationFull]:
+        """
+        Controller method to search organizations by name.
+
+        Parameters:
+        - name: The name or partial name of the organizations to search for.
+
+        Returns:
+        - List of OrganizationFull instances matching the search criteria.
+        """
+
+        return await organization_usecase.search_by_name(
+            name=name
+        )

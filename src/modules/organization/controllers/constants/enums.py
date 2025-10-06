@@ -9,6 +9,7 @@ class CtrlPath(StrEnum):
     sid = "/{sid}"
     activity_descendant = "/search/activity/descendant"
     activity = "/search/activity"
+    by_name = "/search/name"
 
 
 class OrganizationCtrlEnums:

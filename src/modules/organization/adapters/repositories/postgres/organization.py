@@ -87,3 +87,25 @@ class OrganizationPsqlRepo(
         )
 
         return await self._get_all_results(query)
+    
+    @LoggingFunctionInfo(
+        description="Search activities by name using case-insensitive partial match."
+    )
+    async def search_by_name(
+        self,
+        name: str,
+        custom_options: tuple[ExecutableOption, ...] | None = None,
+    ) -> Sequence[OrganizationModel | None]:
+        """
+        Performs a case-insensitive search for activities matching the given name pattern.
+
+        :param name: Name pattern to look for.
+        :param custom_options: Optional SQLAlchemy execution options.
+        :return: Sequence of matching OrganizationModel instances or None.
+        """
+
+        query = select(self._model).where(self._model.name.ilike(f"%{name}%"))
+
+        query = await self._apply_options(query=query, options=custom_options)
+
+        return await self._get_all_results(query)
